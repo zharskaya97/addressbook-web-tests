@@ -10,33 +10,60 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestCreateGroupTest {
-  private WebDriver driver;
-  JavascriptExecutor js;
+    private WebDriver driver;
+    JavascriptExecutor js;
 
-  @BeforeTest
-  public void setUp() {
-    System.setProperty("webdriver.chrome.driver", "D:\\Autotests\\chromedriver_win32\\chromedriver.exe");
-    driver = new ChromeDriver();
-    js = (JavascriptExecutor) driver;
-    Map<String, Object> vars = new HashMap<String, Object>();
-    driver.get("http://localhost/addressbook/group.php");
-    driver.manage().window().setSize(new Dimension(778, 425));
-    driver.findElement(By.name("user")).sendKeys("admin");
-    driver.findElement(By.name("pass")).sendKeys("secret");
-    driver.findElement(By.name("pass")).sendKeys(Keys.ENTER);
-  }
-  @AfterTest
-  public void tearDown() {
-    driver.quit();
-  }
-  @Test
-  public void testCreateGroup() {
-    driver.findElement(By.name("new")).click();
-    driver.findElement(By.name("group_name")).click();
-    driver.findElement(By.name("group_name")).sendKeys("group1");
-    driver.findElement(By.name("group_header")).sendKeys("group2");
-    driver.findElement(By.name("group_footer")).sendKeys("group3");
-    driver.findElement(By.name("submit")).click();
-    driver.findElement(By.linkText("groups")).click();
-  }
+    @BeforeTest
+    public void setUp() {
+        System.setProperty("webdriver.chrome.driver", "D:\\Autotests\\chromedriver_win32\\chromedriver.exe");
+        driver = new ChromeDriver();
+        js = (JavascriptExecutor) driver;
+        Map<String, Object> vars = new HashMap<String, Object>();
+        login("admin", "secret");
+    }
+
+    private void login(String username, String password) {
+        driver.get("http://localhost/addressbook/");
+        driver.manage().window().setSize(new Dimension(778, 425));
+        driver.findElement(By.name("user")).sendKeys(username);
+        driver.findElement(By.name("pass")).sendKeys(password);
+        driver.findElement(By.name("pass")).sendKeys(Keys.ENTER);
+    }
+
+    @AfterTest
+    public void tearDown() {
+        driver.quit();
+    }
+
+    @Test
+    public void testCreateGroup() {
+        gotoGroupPage();
+        initGroupCreation();
+        fillGroupForm(new GroupData("group1", "group2", "group3"));
+        submitGroupCreation();
+        returnToGroupPage();
+    }
+
+    private void returnToGroupPage() {
+        driver.findElement(By.linkText("groups")).click();
+    }
+
+    private void submitGroupCreation() {
+        driver.findElement(By.name("submit")).click();
+    }
+
+    private void fillGroupForm(GroupData groupData) {
+        driver.findElement(By.name("group_name")).click();
+        driver.findElement(By.name("group_name")).sendKeys(groupData.getName());
+        driver.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
+        driver.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
+    }
+
+    private void initGroupCreation() {
+        driver.findElement(By.name("new")).click();
+    }
+
+    private void gotoGroupPage() {
+        driver.findElement(By.linkText("groups")).click();
+    }
 }
