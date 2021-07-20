@@ -20,13 +20,18 @@ public class CreateContactTest {
     driver.quit();
   }
   @Test
-  public void createContact() {
-    driver.get("http://localhost/addressbook/");
-    driver.manage().window().setSize(new Dimension(1552, 840));
-    driver.findElement(By.name("user")).sendKeys("admin");
-    driver.findElement(By.name("pass")).sendKeys("secret");
-    driver.findElement(By.name("pass")).sendKeys(Keys.ENTER);
-    driver.findElement(By.linkText("add new")).click();
+  public void testCreateContact() {
+    login();
+    initContactCreation();
+    fillContactForm();
+    submitContactCreation();
+  }
+
+  private void submitContactCreation() {
+    driver.findElement(By.linkText("home")).click();
+  }
+
+  private void fillContactForm() {
     driver.findElement(By.name("firstname")).click();
     driver.findElement(By.name("firstname")).sendKeys("Test");
     driver.findElement(By.name("middlename")).click();
@@ -68,6 +73,17 @@ public class CreateContactTest {
     driver.findElement(By.name("new_group")).click();
     driver.findElement(By.name("theform")).click();
     driver.findElement(By.cssSelector("input:nth-child(87)")).click();
-    driver.findElement(By.linkText("home")).click();
+  }
+
+  private void initContactCreation() {
+    driver.findElement(By.linkText("add new")).click();
+  }
+
+  private void login() {
+    driver.get("http://localhost/addressbook/");
+    driver.manage().window().setSize(new Dimension(1552, 840));
+    driver.findElement(By.name("user")).sendKeys("admin");
+    driver.findElement(By.name("pass")).sendKeys("secret");
+    driver.findElement(By.name("pass")).sendKeys(Keys.ENTER);
   }
 }
