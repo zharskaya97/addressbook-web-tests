@@ -14,16 +14,25 @@ public class CreateContactTest {
     System.setProperty("webdriver.chrome.driver", "D:\\Autotests\\chromedriver_win32\\chromedriver.exe");
     driver = new ChromeDriver();
     js = (JavascriptExecutor) driver;
+    login("admin", "secret");
   }
+
+  private void login(String username, String password) {
+    driver.get("http://localhost/addressbook/");
+    driver.manage().window().setSize(new Dimension(1552, 840));
+    driver.findElement(By.name("user")).sendKeys(username);
+    driver.findElement(By.name("pass")).sendKeys(password);
+    driver.findElement(By.name("pass")).sendKeys(Keys.ENTER);
+  }
+
   @AfterTest
   public void tearDown() {
     driver.quit();
   }
   @Test
   public void testCreateContact() {
-    login();
     initContactCreation();
-    fillContactForm();
+    fillContactForm(new ContactData("Test", "Test", "Test", "Testing", "Samara", "88005553535", "marino4ka163@mail.ru", "1997", "//option[. = '28']", "//option[. = 'January']"));
     submitContactCreation();
   }
 
@@ -31,59 +40,59 @@ public class CreateContactTest {
     driver.findElement(By.linkText("home")).click();
   }
 
-  private void fillContactForm() {
+  private void fillContactForm(ContactData contactData) {
     driver.findElement(By.name("firstname")).click();
-    driver.findElement(By.name("firstname")).sendKeys("Test");
+    driver.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
     driver.findElement(By.name("middlename")).click();
-    driver.findElement(By.name("middlename")).sendKeys("Test");
-    driver.findElement(By.name("lastname")).sendKeys("Test");
+    driver.findElement(By.name("middlename")).sendKeys(contactData.getMiddlename());
+    driver.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
     driver.findElement(By.name("nickname")).click();
-    driver.findElement(By.name("nickname")).sendKeys("Testing");
+    driver.findElement(By.name("nickname")).sendKeys(contactData.getNickname());
     driver.findElement(By.name("address")).click();
-    driver.findElement(By.name("address")).sendKeys("Samara");
+    driver.findElement(By.name("address")).sendKeys(contactData.getAddress());
     driver.findElement(By.name("theform")).click();
     driver.findElement(By.name("theform")).click();
     driver.findElement(By.cssSelector("label:nth-child(30)")).click();
     driver.findElement(By.name("mobile")).click();
-    driver.findElement(By.name("mobile")).sendKeys("88005553535");
+    driver.findElement(By.name("mobile")).sendKeys(contactData.getMobile());
     driver.findElement(By.name("email")).click();
     driver.findElement(By.name("email")).click();
-    driver.findElement(By.name("email")).sendKeys("marino4ka163@mail.ru");
+    driver.findElement(By.name("email")).sendKeys(contactData.getEmail());
     driver.findElement(By.name("theform")).click();
-    driver.findElement(By.name("bday")).click();
-    {
-      WebElement dropdown = driver.findElement(By.name("bday"));
-      dropdown.findElement(By.xpath("//option[. = '28']")).click();
-    }
-    driver.findElement(By.name("bday")).click();
-    driver.findElement(By.name("bmonth")).click();
-    {
-      WebElement dropdown = driver.findElement(By.name("bmonth"));
-      dropdown.findElement(By.xpath("//option[. = 'January']")).click();
-    }
-    driver.findElement(By.name("bmonth")).click();
-    driver.findElement(By.name("byear")).click();
-    driver.findElement(By.name("byear")).sendKeys("1997");
+    changeBday(contactData.getByear(), contactData.getBday(), contactData.getBmonth());
     driver.findElement(By.name("theform")).click();
-    driver.findElement(By.name("new_group")).click();
-    {
-      WebElement dropdown = driver.findElement(By.name("new_group"));
-      dropdown.findElement(By.xpath("//option[. = 'group1']")).click();
-    }
+    changeGroup();
     driver.findElement(By.name("new_group")).click();
     driver.findElement(By.name("theform")).click();
     driver.findElement(By.cssSelector("input:nth-child(87)")).click();
   }
 
-  private void initContactCreation() {
-    driver.findElement(By.linkText("add new")).click();
+  private void changeGroup() {
+    driver.findElement(By.name("new_group")).click();
+    {
+      WebElement dropdown = driver.findElement(By.name("new_group"));
+      dropdown.findElement(By.xpath("//option[. = 'group1']")).click();
+    }
   }
 
-  private void login() {
-    driver.get("http://localhost/addressbook/");
-    driver.manage().window().setSize(new Dimension(1552, 840));
-    driver.findElement(By.name("user")).sendKeys("admin");
-    driver.findElement(By.name("pass")).sendKeys("secret");
-    driver.findElement(By.name("pass")).sendKeys(Keys.ENTER);
+  private void changeBday(String byear, String bday, String bmonth) {
+    driver.findElement(By.name("bday")).click();
+    {
+      WebElement dropdown = driver.findElement(By.name("bday"));
+      dropdown.findElement(By.xpath(bday)).click();
+    }
+    driver.findElement(By.name("bday")).click();
+    driver.findElement(By.name("bmonth")).click();
+    {
+      WebElement dropdown = driver.findElement(By.name("bmonth"));
+      dropdown.findElement(By.xpath(bmonth)).click();
+    }
+    driver.findElement(By.name("bmonth")).click();
+    driver.findElement(By.name("byear")).click();
+    driver.findElement(By.name("byear")).sendKeys(byear);
+  }
+
+  private void initContactCreation() {
+    driver.findElement(By.linkText("add new")).click();
   }
 }
