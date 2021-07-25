@@ -1,22 +1,18 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
-public class SessionHelper {
-    private WebDriver driver;
+public class SessionHelper extends HelperBase {
 
     public SessionHelper(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void login(String username, String password) {
-        driver.get("http://localhost/addressbook/");
-        driver.manage().window().setSize(new Dimension(1200, 1500));
-        driver.findElement(By.name("user")).sendKeys(username);
-        driver.findElement(By.name("pass")).sendKeys(password);
+        type(By.name("user"), username);
+        type(By.name("pass"), password);
         driver.findElement(By.name("pass")).sendKeys(Keys.ENTER);
     }
 }

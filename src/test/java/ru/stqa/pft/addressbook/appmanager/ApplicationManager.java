@@ -16,6 +16,8 @@ public class ApplicationManager {
         System.setProperty("webdriver.chrome.driver", "D:\\Autotests\\chromedriver_win32\\chromedriver.exe");
         driver = new ChromeDriver();
         js = (JavascriptExecutor) driver;
+        driver.get("http://localhost/addressbook/");
+        driver.manage().window().setSize(new Dimension(1200, 1500));
         GroupHelper = new GroupHelper(driver);
         contactHelper = new ContactHelper(driver);
         navigationHelper = new NavigationHelper(driver);
