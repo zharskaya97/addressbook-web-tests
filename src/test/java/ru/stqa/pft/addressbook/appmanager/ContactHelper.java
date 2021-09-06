@@ -21,27 +21,23 @@ public class ContactHelper extends GroupHelper {
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("nickname"), contactData.getNickname());
         type(By.name("address"), contactData.getAddress());
-        click(By.name("theform"));
-        click(By.name("theform"));
-        click(By.cssSelector("label:nth-child(30)"));
+        //click(By.cssSelector("label:nth-child(30)"));
         type(By.name("mobile"), contactData.getMobile());
         type(By.name("email"), contactData.getEmail());
-        click(By.name("theform"));
         changeBday(contactData.getByear(), contactData.getBday(), contactData.getBmonth());
-        click(By.name("theform"));
-        changeGroup();
+        /*changeGroup();
         click(By.name("new_group"));
         click(By.name("theform"));
-        click(By.cssSelector("input:nth-child(87)"));
+        click(By.cssSelector("input:nth-child(87)"));*/
     }
 
-    private void changeGroup() {
+    /*private void changeGroup() {
         click(By.name("new_group"));
         {
             WebElement dropdown = driver.findElement(By.name("new_group"));
             dropdown.findElement(By.xpath("//option[. = 'group1']")).click();
         }
-    }
+    }*/
 
     private void changeBday(String byear, String bday, String bmonth) {
         click(By.name("bday"));
@@ -62,5 +58,23 @@ public class ContactHelper extends GroupHelper {
 
     public void initContactCreation() {
         click(By.linkText("add new"));
+    }
+
+    public void selectContact() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteSelectedContacts() {
+        click(By.cssSelector(".left:nth-child(8)"));
+        driver.switchTo().alert().getText();
+        driver.switchTo().alert().accept();
+    }
+
+    public void initContactModification() {
+        click(By.cssSelector("tr:nth-child(2) > .center:nth-child(8) img"));
+    }
+
+    public void submitContactModification() {
+        click(By.name("update"));
     }
 }
