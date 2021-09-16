@@ -7,6 +7,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
@@ -34,6 +35,7 @@ public class ApplicationManager {
             driver = new InternetExplorerDriver();
         }
         js = (JavascriptExecutor) driver;
+        //driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.get("http://localhost/addressbook/");
         driver.manage().window().setSize(new Dimension(1200, 1500));
         GroupHelper = new GroupHelper(driver);

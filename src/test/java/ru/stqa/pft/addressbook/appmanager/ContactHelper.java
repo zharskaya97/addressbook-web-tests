@@ -1,8 +1,11 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactHelper extends GroupHelper {
@@ -15,16 +18,22 @@ public class ContactHelper extends GroupHelper {
         click(By.linkText("home"));
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("middlename"), contactData.getMiddlename());
         type(By.name("lastname"), contactData.getLastname());
-        type(By.name("nickname"), contactData.getNickname());
+
+        if (creation) {
+            new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
+       /* type(By.name("nickname"), contactData.getNickname());
         type(By.name("address"), contactData.getAddress());
         //click(By.cssSelector("label:nth-child(30)"));
         type(By.name("mobile"), contactData.getMobile());
         type(By.name("email"), contactData.getEmail());
-        changeBday(contactData.getByear(), contactData.getBday(), contactData.getBmonth());
+        changeBday(contactData.getByear(), contactData.getBday(), contactData.getBmonth());*/
         /*changeGroup();
         click(By.name("new_group"));
         click(By.name("theform"));
@@ -39,7 +48,7 @@ public class ContactHelper extends GroupHelper {
         }
     }*/
 
-    private void changeBday(String byear, String bday, String bmonth) {
+   /* private void changeBday(String byear, String bday, String bmonth) {
         click(By.name("bday"));
         {
             WebElement dropdown = driver.findElement(By.name("bday"));
@@ -54,7 +63,7 @@ public class ContactHelper extends GroupHelper {
         click(By.name("bmonth"));
         click(By.name("byear"));
         driver.findElement(By.name("byear")).sendKeys(byear);
-    }
+    }*/
 
     public void initContactCreation() {
         click(By.linkText("add new"));
