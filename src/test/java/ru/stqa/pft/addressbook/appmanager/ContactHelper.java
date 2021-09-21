@@ -66,8 +66,8 @@ public class ContactHelper extends GroupHelper {
         click(By.linkText("add new"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        driver.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContacts() {
@@ -97,5 +97,9 @@ public class ContactHelper extends GroupHelper {
         fillContactForm(contact, true);
         submitContactCreation();
         returnToHomePage();
+    }
+
+    public int getContactCount() {
+        return driver.findElements(By.name("selected[]")).size();
     }
 }
