@@ -1,9 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -15,7 +13,7 @@ public class ContactHelper extends GroupHelper {
     }
 
     public void submitContactCreation() {
-        click(By.linkText("home"));
+        click(By.cssSelector("input:nth-child(87)"));
     }
 
     public void fillContactForm(ContactData contactData, boolean creation) {
@@ -28,27 +26,26 @@ public class ContactHelper extends GroupHelper {
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
+    }
        /* type(By.name("nickname"), contactData.getNickname());
         type(By.name("address"), contactData.getAddress());
         //click(By.cssSelector("label:nth-child(30)"));
         type(By.name("mobile"), contactData.getMobile());
         type(By.name("email"), contactData.getEmail());
-        changeBday(contactData.getByear(), contactData.getBday(), contactData.getBmonth());*/
-        /*changeGroup();
+        changeBday(contactData.getByear(), contactData.getBday(), contactData.getBmonth());
+        changeGroup();
         click(By.name("new_group"));
         click(By.name("theform"));
-        click(By.cssSelector("input:nth-child(87)"));*/
-    }
+        click(By.cssSelector("input:nth-child(87)"));
 
-    /*private void changeGroup() {
+    private void changeGroup() {
         click(By.name("new_group"));
         {
             WebElement dropdown = driver.findElement(By.name("new_group"));
             dropdown.findElement(By.xpath("//option[. = 'group1']")).click();
         }
-    }*/
-
-   /* private void changeBday(String byear, String bday, String bmonth) {
+    }
+    private void changeBday(String byear, String bday, String bmonth) {
         click(By.name("bday"));
         {
             WebElement dropdown = driver.findElement(By.name("bday"));
@@ -85,5 +82,20 @@ public class ContactHelper extends GroupHelper {
 
     public void submitContactModification() {
         click(By.name("update"));
+    }
+
+    public void returnToHomePage() {
+        click(By.linkText("home"));
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void createContact(ContactData contact) {
+        initContactCreation();
+        fillContactForm(contact, true);
+        submitContactCreation();
+        returnToHomePage();
     }
 }
