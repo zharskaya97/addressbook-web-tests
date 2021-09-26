@@ -31,40 +31,6 @@ public class ContactHelper extends GroupHelper {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
     }
-       /* type(By.name("nickname"), contactData.getNickname());
-        type(By.name("address"), contactData.getAddress());
-        //click(By.cssSelector("label:nth-child(30)"));
-        type(By.name("mobile"), contactData.getMobile());
-        type(By.name("email"), contactData.getEmail());
-        changeBday(contactData.getByear(), contactData.getBday(), contactData.getBmonth());
-        changeGroup();
-        click(By.name("new_group"));
-        click(By.name("theform"));
-        click(By.cssSelector("input:nth-child(87)"));
-
-    private void changeGroup() {
-        click(By.name("new_group"));
-        {
-            WebElement dropdown = driver.findElement(By.name("new_group"));
-            dropdown.findElement(By.xpath("//option[. = 'group1']")).click();
-        }
-    }
-    private void changeBday(String byear, String bday, String bmonth) {
-        click(By.name("bday"));
-        {
-            WebElement dropdown = driver.findElement(By.name("bday"));
-            dropdown.findElement(By.xpath(bday)).click();
-        }
-        click(By.name("bday"));
-        click(By.name("bmonth"));
-        {
-            WebElement dropdown = driver.findElement(By.name("bmonth"));
-            dropdown.findElement(By.xpath(bmonth)).click();
-        }
-        click(By.name("bmonth"));
-        click(By.name("byear"));
-        driver.findElement(By.name("byear")).sendKeys(byear);
-    }*/
 
     public void initContactCreation() {
         click(By.linkText("add new"));
@@ -112,7 +78,8 @@ public class ContactHelper extends GroupHelper {
         List<WebElement> elements = driver.findElements(By.cssSelector("tr[name=entry]"));
         for (WebElement element : elements){
             String name = element.getText();
-            ContactData contact = new ContactData(name, "test2","Test3","group1");
+            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            ContactData contact = new ContactData(id, name, "test2","Test3","group1");
             contacts.add(contact);
         }
         return contacts;
