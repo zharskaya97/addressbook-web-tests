@@ -11,15 +11,14 @@ import static org.testng.Assert.assertEquals;
 
 public class ContactCreateTest extends TestBase {
 
-  @Test
+  @Test //(enabled = false)
   public void testCreateContact() {
     app.getNavigationHelper().gotoHomePage();
     List<ContactData> before = app.getContactHelper().getContactList();
     //int before = app.getContactHelper().getContactCount();
-    ContactData contact = new ContactData("test1","test3","group1");
+    ContactData contact = new ContactData("test1","йцукен","group1");
     app.getContactHelper().createContact(contact);
     List<ContactData> after = app.getContactHelper().getContactList();
-    //int after = app.getContactHelper().getContactCount();
     assertEquals(after.size(), before.size()+1);
 
    /* int  max = 0;

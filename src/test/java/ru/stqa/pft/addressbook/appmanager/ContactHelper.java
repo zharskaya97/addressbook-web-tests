@@ -70,6 +70,15 @@ public class ContactHelper extends GroupHelper {
         returnToHomePage();
     }
 
+
+    public void modifyContact(int selIndex, ContactData contact) {
+        selectContact(selIndex);
+        initContactModification(selIndex);
+        fillContactForm(contact, false);
+        submitContactModification();
+        returnToHomePage();
+    }
+
     /*public int getContactCount() {
         return driver.findElements(By.name("selected[]")).size();
     }*/
