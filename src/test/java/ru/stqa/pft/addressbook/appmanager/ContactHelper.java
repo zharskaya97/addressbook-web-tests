@@ -22,7 +22,6 @@ public class ContactHelper extends GroupHelper {
 
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
-        type(By.name("middlename"), contactData.getMiddlename());
         type(By.name("lastname"), contactData.getLastname());
 
         if (creation) {
@@ -46,8 +45,10 @@ public class ContactHelper extends GroupHelper {
         driver.switchTo().alert().accept();
     }
 
-    public void initContactModification() {
-        click(By.cssSelector("tr:nth-child(2) > .center:nth-child(8) img"));
+    public void initContactModification(int index) {
+        driver.findElements(By.cssSelector("tr[name=entry]")).get(8).findElement(By.cssSelector("td.center:nth-child(8) img")).click();
+        // > td.center:nth-child(8) img
+        //click(By.cssSelector("tr:nth-child(2) > .center:nth-child(8) img"));
     }
 
     public void submitContactModification() {
@@ -69,17 +70,19 @@ public class ContactHelper extends GroupHelper {
         returnToHomePage();
     }
 
-    public int getContactCount() {
+    /*public int getContactCount() {
         return driver.findElements(By.name("selected[]")).size();
-    }
+    }*/
 
     public List<ContactData> getContactList() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = driver.findElements(By.cssSelector("tr[name=entry]"));
-        for (WebElement element : elements){
-            String name = element.getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData(id, name, "test2","Test3","group1");
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> trs = driver.findElements(By.cssSelector("tr[name=entry]"));
+        for (WebElement tr : trs){
+            List<WebElement> tds = tr.findElements(By.cssSelector("td"));
+            String lastname = tds.get(1).getText();
+            String name = tds.get(2).getText();
+            int id = Integer.parseInt(tr.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData(id, name, lastname,null);
             contacts.add(contact);
         }
         return contacts;
