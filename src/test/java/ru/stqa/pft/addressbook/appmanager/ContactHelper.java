@@ -46,7 +46,7 @@ public class ContactHelper extends GroupHelper {
     }
 
     public void initContactModification(int index) {
-        driver.findElements(By.cssSelector("tr[name=entry]")).get(8).findElement(By.cssSelector("td.center:nth-child(8) img")).click();
+        driver.findElements(By.cssSelector("tr[name=entry]")).get(index).findElement(By.cssSelector("td.center:nth-child(8) img")).click();
         // > td.center:nth-child(8) img
         //click(By.cssSelector("tr:nth-child(2) > .center:nth-child(8) img"));
     }

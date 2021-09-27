@@ -19,7 +19,7 @@ public class ContactModificationTests extends TestBase {
         int selIndex = before.size() - 1;
         app.getContactHelper().selectContact(selIndex);
         app.getContactHelper().initContactModification(selIndex);
-        ContactData contact = new ContactData(before.get(selIndex).getId(), "Test110???", "Test330???", null);
+        ContactData contact = new ContactData(before.get(selIndex).getId(), "Testq1", "Testq1", null);
         app.getContactHelper().fillContactForm(contact, false);
         app.getContactHelper().submitContactModification();
         app.getNavigationHelper().gotoHomePage();
