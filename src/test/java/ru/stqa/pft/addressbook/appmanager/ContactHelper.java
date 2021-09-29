@@ -63,7 +63,7 @@ public class ContactHelper extends GroupHelper {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact, true);
         submitContactCreation();
@@ -71,7 +71,7 @@ public class ContactHelper extends GroupHelper {
     }
 
 
-    public void modifyContact(int selIndex, ContactData contact) {
+    public void modify(int selIndex, ContactData contact) {
         selectContact(selIndex);
         initContactModification(selIndex);
         fillContactForm(contact, false);
@@ -79,11 +79,17 @@ public class ContactHelper extends GroupHelper {
         returnToHomePage();
     }
 
+    public void delete(int index) {
+        selectContact(index);
+        deleteSelectedContacts();
+        returnToHomePage();
+    }
+
     /*public int getContactCount() {
         return driver.findElements(By.name("selected[]")).size();
     }*/
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> contactList() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> trs = driver.findElements(By.cssSelector("tr[name=entry]"));
         for (WebElement tr : trs){

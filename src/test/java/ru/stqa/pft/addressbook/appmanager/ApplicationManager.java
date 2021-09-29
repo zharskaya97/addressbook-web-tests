@@ -49,15 +49,15 @@ public class ApplicationManager {
         driver.quit();
     }
 
-    public GroupHelper getGroupHelper() {
+    public GroupHelper group() {
         return GroupHelper;
     }
 
-    public ContactHelper getContactHelper() {
+    public ContactHelper contact() {
         return contactHelper;
     }
 
-    public NavigationHelper getNavigationHelper() {
+    public NavigationHelper goTo() {
         return navigationHelper;
     }
 }
