@@ -97,7 +97,7 @@ public class ContactHelper extends GroupHelper {
             String lastname = tds.get(1).getText();
             String name = tds.get(2).getText();
             int id = Integer.parseInt(tr.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData(id, name, lastname,null);
+            ContactData contact = new ContactData().withId(id).withFirstname(name).withLastname(lastname);
             contacts.add(contact);
         }
         return contacts;
