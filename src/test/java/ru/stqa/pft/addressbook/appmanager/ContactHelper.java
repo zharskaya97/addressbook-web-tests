@@ -70,6 +70,7 @@ public class ContactHelper extends GroupHelper {
         initContactCreation();
         fillContactForm(contact, true);
         submitContactCreation();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -79,6 +80,7 @@ public class ContactHelper extends GroupHelper {
         initContactModification();
         fillContactForm(contact, false);
         submitContactModification();
+        contactCache = null;
         returnToHomePage();
     }
    /* public void modify(int selIndex, ContactData contact) {
@@ -91,6 +93,7 @@ public class ContactHelper extends GroupHelper {
     public void delete(ContactData contact) {
         selectContactById(contact.getId());
         deleteSelectedContacts();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -114,16 +117,21 @@ public class ContactHelper extends GroupHelper {
         return contacts;
     }*/
 
+    private Contacts contactCache = null;
+
     public Contacts allContact() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null){
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> trs = driver.findElements(By.cssSelector("tr[name=entry]"));
         for (WebElement tr : trs) {
             List<WebElement> tds = tr.findElements(By.cssSelector("td"));
             String lastname = tds.get(1).getText();
             String name = tds.get(2).getText();
             int id = Integer.parseInt(tr.findElement(By.tagName("input")).getAttribute("value"));
-            contacts.add(new ContactData().withId(id).withFirstname(name).withLastname(lastname));
+            contactCache.add(new ContactData().withId(id).withFirstname(name).withLastname(lastname));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 }
