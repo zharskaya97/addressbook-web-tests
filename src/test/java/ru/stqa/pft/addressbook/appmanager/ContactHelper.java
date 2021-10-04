@@ -8,9 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends GroupHelper {
 
@@ -97,7 +95,7 @@ public class ContactHelper extends GroupHelper {
         returnToHomePage();
     }
 
-    /*public int getContactCount() {
+    public int countC() {
         return driver.findElements(By.name("selected[]")).size();
     }
     /* public boolean isThereAContact() {
@@ -120,7 +118,7 @@ public class ContactHelper extends GroupHelper {
     private Contacts contactCache = null;
 
     public Contacts allContact() {
-        if (contactCache != null){
+        if (contactCache != null) {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();

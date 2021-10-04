@@ -15,16 +15,20 @@ public class ContactCreateTest extends TestBase {
         Contacts before = app.contact().allContact();
         ContactData contact = new ContactData().withFirstname("test1").withLastname("test2").withGroup("group1");
         app.contact().create(contact);
+        assertThat(app.contact().countC(), equalTo(before.size() + 1));
         Contacts after = app.contact().allContact();
-        assertThat(after.size(), equalTo(before.size() + 1));
-
-   /* int  max = 0;
-    for (ContactData c: after) {
-      if (c.getId()>max){
-        max = c.getId();
-      }
-    }*/
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    }
+
+    @Test
+    public void testBadCreateContact() {
+        app.goTo().homePage();
+        Contacts before = app.contact().allContact();
+        ContactData contact = new ContactData().withFirstname("test1'").withLastname("test2").withGroup("group1");
+        app.contact().create(contact);
+        assertThat(app.contact().countC(), equalTo(before.size()));
+        Contacts after = app.contact().allContact();
+        assertThat(after, equalTo(before));
     }
 }
