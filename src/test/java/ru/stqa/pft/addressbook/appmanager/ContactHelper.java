@@ -6,9 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends GroupHelper {
 
@@ -35,8 +37,8 @@ public class ContactHelper extends GroupHelper {
         click(By.linkText("add new"));
     }
 
-    public void selectContact(int index) {
-        driver.findElements(By.name("selected[]")).get(index).click();
+    public void selectContactById(int id) {
+        driver.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void deleteSelectedContacts() {
@@ -45,11 +47,16 @@ public class ContactHelper extends GroupHelper {
         driver.switchTo().alert().accept();
     }
 
-    public void initContactModification(int index) {
-        driver.findElements(By.cssSelector("tr[name=entry]")).get(index).findElement(By.cssSelector("td.center:nth-child(8) img")).click();
-        // > td.center:nth-child(8) img
-        //click(By.cssSelector("tr:nth-child(2) > .center:nth-child(8) img"));
+    public void initContactModification() {
+        click(By.cssSelector("td.center:nth-child(8) img"));
     }
+
+/*    public void initContactModification(int index) {
+        driver.findElements(By.cssSelector("tr[name=entry]"))
+                .get(index)
+                .findElement(By.cssSelector("td.center:nth-child(8) img")).click();
+        returnToHomePage();
+    }*/
 
     public void submitContactModification() {
         click(By.name("update"));
@@ -57,10 +64,6 @@ public class ContactHelper extends GroupHelper {
 
     public void returnToHomePage() {
         click(By.linkText("home"));
-    }
-
-    public boolean isThereAContact() {
-        return isElementPresent(By.name("selected[]"));
     }
 
     public void create(ContactData contact) {
@@ -71,34 +74,55 @@ public class ContactHelper extends GroupHelper {
     }
 
 
-    public void modify(int selIndex, ContactData contact) {
-        selectContact(selIndex);
-        initContactModification(selIndex);
+    public void modify(ContactData contact) {
+        selectContactById(contact.getId());
+        initContactModification();
         fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();
     }
+   /* public void modify(int selIndex, ContactData contact) {
+        selectContact(selIndex);
+        initContactModification(selIndex);
+        fillContactForm(contact, false);
+            returnToHomePage();
+        }*/
 
-    public void delete(int index) {
-        selectContact(index);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         deleteSelectedContacts();
         returnToHomePage();
     }
 
     /*public int getContactCount() {
         return driver.findElements(By.name("selected[]")).size();
+    }
+    /* public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }*/
 
-    public List<ContactData> contactList() {
+/*    public List<ContactData> contactList() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> trs = driver.findElements(By.cssSelector("tr[name=entry]"));
-        for (WebElement tr : trs){
+        for (WebElement tr : trs) {
             List<WebElement> tds = tr.findElements(By.cssSelector("td"));
             String lastname = tds.get(1).getText();
             String name = tds.get(2).getText();
             int id = Integer.parseInt(tr.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData().withId(id).withFirstname(name).withLastname(lastname);
-            contacts.add(contact);
+            contacts.add(new ContactData().withId(id).withFirstname(name).withLastname(lastname));
+        }
+        return contacts;
+    }*/
+
+    public Contacts allContact() {
+        Contacts contacts = new Contacts();
+        List<WebElement> trs = driver.findElements(By.cssSelector("tr[name=entry]"));
+        for (WebElement tr : trs) {
+            List<WebElement> tds = tr.findElements(By.cssSelector("td"));
+            String lastname = tds.get(1).getText();
+            String name = tds.get(2).getText();
+            int id = Integer.parseInt(tr.findElement(By.tagName("input")).getAttribute("value"));
+            contacts.add(new ContactData().withId(id).withFirstname(name).withLastname(lastname));
         }
         return contacts;
     }
