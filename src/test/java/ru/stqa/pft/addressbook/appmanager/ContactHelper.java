@@ -8,7 +8,10 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -103,18 +106,19 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }*/
 
-/*    public List<ContactData> contactList() {
-        List<ContactData> contacts = new ArrayList<>();
-        List<WebElement> trs = driver.findElements(By.cssSelector("tr[name=entry]"));
-        for (WebElement tr : trs) {
-            List<WebElement> tds = tr.findElements(By.cssSelector("td"));
-            String lastname = tds.get(1).getText();
-            String name = tds.get(2).getText();
-            int id = Integer.parseInt(tr.findElement(By.tagName("input")).getAttribute("value"));
-            contacts.add(new ContactData().withId(id).withFirstname(name).withLastname(lastname));
+    public Set<ContactData> contactList() {
+        Set<ContactData> contacts = new HashSet<ContactData>();
+        List<WebElement> rows = driver.findElements(By.cssSelector("tr[name=entry]"));
+        for (WebElement row : rows) { //tr
+            List<WebElement> cells = row.findElements(By.cssSelector("td")); //td
+            String lastname = cells.get(1).getText();
+            String name = cells.get(2).getText();
+            String[] phones = cells.get(5).getText().split("\n");
+            int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
+            contacts.add(new ContactData().withId(id).withFirstname(name).withLastname(lastname).withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
         }
         return contacts;
-    }*/
+    }
 
     private Contacts contactCache = null;
 

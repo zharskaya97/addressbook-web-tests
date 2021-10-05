@@ -67,8 +67,8 @@ public class ContactData {
     public String getWorkPhone() {
         return workPhone;
     }
-    public ContactData withWorkPhone(String getWorkPhone) {
-        this.mobilePhone = getWorkPhone;
+    public ContactData withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
         return this;
     }
 
