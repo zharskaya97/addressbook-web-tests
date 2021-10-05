@@ -10,7 +10,7 @@ import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.List;
 
-public class ContactHelper extends GroupHelper {
+public class ContactHelper extends HelperBase {
 
     public ContactHelper(WebDriver driver) {
         super(driver);
@@ -45,8 +45,9 @@ public class ContactHelper extends GroupHelper {
         driver.switchTo().alert().accept();
     }
 
-    public void initContactModification() {
-        click(By.cssSelector("td.center:nth-child(8) img"));
+    public void initContactModification(int id) {
+//        click(By.cssSelector("td.center:nth-child(8) img"));
+        click(By.xpath(String.format(".//tr[.//input[@value='%s']]//td[8]/a", id)));
     }
 
 /*    public void initContactModification(int index) {
@@ -75,7 +76,7 @@ public class ContactHelper extends GroupHelper {
 
     public void modify(ContactData contact) {
         selectContactById(contact.getId());
-        initContactModification();
+        initContactModification(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
         contactCache = null;
