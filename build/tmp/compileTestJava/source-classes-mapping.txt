@@ -22,8 +22,8 @@ ru/stqa/pft/addressbook/tests/GroupDeletionTests.java
  ru.stqa.pft.addressbook.tests.GroupDeletionTests
 ru/stqa/pft/addressbook/tests/ContactDeletionTests.java
  ru.stqa.pft.addressbook.tests.ContactDeletionTests
-ru/stqa/pft/addressbook/tests/GroupCreationTest.java
- ru.stqa.pft.addressbook.tests.GroupCreationTest
+ru/stqa/pft/addressbook/generators/GroupDataGenerator.java
+ ru.stqa.pft.addressbook.generators.GroupDataGenerator
 ru/stqa/pft/addressbook/appmanager/NavigationHelper.java
  ru.stqa.pft.addressbook.appmanager.NavigationHelper
 ru/stqa/pft/addressbook/appmanager/ApplicationManager.java
@@ -34,5 +34,5 @@ ru/stqa/pft/addressbook/tests/ContactModificationTests.java
  ru.stqa.pft.addressbook.tests.ContactModificationTests
 ru/stqa/pft/addressbook/tests/ContactCreateTest.java
  ru.stqa.pft.addressbook.tests.ContactCreateTest
-ru/stqa/pft/addressbook/generators/GroupDataGenerator.java
- ru.stqa.pft.addressbook.generators.GroupDataGenerator
+ru/stqa/pft/addressbook/tests/GroupCreationTest.java
+ ru.stqa.pft.addressbook.tests.GroupCreationTest
