@@ -15,6 +15,7 @@ repositories {
 		implementation 'com.beust:jcommander:1.81'
 		implementation 'com.thoughtworks.xstream:xstream:1.4.18'
 		implementation 'com.google.code.gson:gson:2.8.8'
+		implementation 'ch.qos.logback:logback-classic:1.3.0-alpha10'
 		}
 
 task testGroups(type: Test) {
@@ -27,6 +28,10 @@ task testGroups(type: Test) {
 	if (project.hasProperty('targer')) {
 		systemProperty 'targer', "${target}"
 	}
+}
+
+test {
+	useTestNG()
 }
 
 task testContacts(type: Test) {
