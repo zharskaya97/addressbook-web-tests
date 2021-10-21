@@ -40,3 +40,5 @@ ru/stqa/pft/addressbook/tests/ContactModificationTests.java
  ru.stqa.pft.addressbook.tests.ContactModificationTests
 ru/stqa/pft/addressbook/tests/ContactPhoneTests.java
  ru.stqa.pft.addressbook.tests.ContactPhoneTests
+ru/stqa/pft/addressbook/tests/DbConnectionTest.java
+ ru.stqa.pft.addressbook.tests.DbConnectionTest
