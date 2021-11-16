@@ -24,6 +24,7 @@ public class ApplicationManager {
     JavascriptExecutor js;
     private GroupHelper GroupHelper;
     private String browser;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -33,9 +34,12 @@ public class ApplicationManager {
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-        System.setProperty("webdriver.chrome.driver", "D:\\Autotests\\chromedriver_win32_93\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\Autotests\\chromedriver_win32_96\\chromedriver.exe");
         System.setProperty("webdriver.firefox.marionette", "D:\\Autotests\\geckodriver-v0.29.1-win32\\geckodriver.exe");
         System.setProperty("webdriver.ie.driver", "D:\\Autotests\\IEDriverServer_Win32_3.150.2\\IEDriverServer.exe");
+
+        dbHelper = new DbHelper();
+
         if (Objects.equals(browser, BrowserType.CHROME)) {
             driver = new ChromeDriver();
         } else if (Objects.equals(browser, BrowserType.FIREFOX)) {
@@ -68,5 +72,9 @@ public class ApplicationManager {
 
     public NavigationHelper goTo() {
         return navigationHelper;
+    }
+
+    public DbHelper db() {
+        return dbHelper;
     }
 }
