@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,11 +50,14 @@ public class ContactCreateTest extends TestBase {
 
     @Test(enabled = false)
     public void testCreateContact_withPhoto() {
+        Groups groups = app.db().groups();
+        File photo = new File("src/test/resources/UnnPfCYmlns.jpg");
+        ContactData newContact = new ContactData().withFirstname("test133").withLastname("test233")
+                .withPhoto(photo)
+                .inGroup(groups.iterator().next());
         app.goTo().homePage();
         app.contact().initContactCreation();
-        File photo = new File("src/test/resources/UnnPfCYmlns.jpg");
-        app.contact().fillContactForm(
-                new ContactData().withFirstname("test133").withLastname("test233").withGroup("group1").withPhoto(photo), true);
+        app.contact().fillContactForm(newContact,true);
         app.contact().submitContactCreation();
         app.contact().returnToHomePage();
     }

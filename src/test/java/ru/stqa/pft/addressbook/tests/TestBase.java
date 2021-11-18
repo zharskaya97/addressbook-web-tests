@@ -67,7 +67,7 @@ public class TestBase {
                     .map((g) -> new ContactData().withId(g.getId())
                             .withFirstname(g.getFirstname())
                             .withLastname(g.getLastname())
-                            .withGroup(g.getGroup())
+                           // .withGroup(g.getGroup())
                             .withHomePhone(g.getHomePhone())
                             .withMobilePhone(g.getMobilePhone())
                             .withWorkPhone(g.getWorkPhone()))

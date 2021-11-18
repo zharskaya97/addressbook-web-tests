@@ -72,7 +72,7 @@ public class ContactDataGenerator {
         System.out.println(new File(".").getAbsoluteFile());
         try (Writer writer = new FileWriter(file)) {
             for (ContactData contact : contacts) {
-                writer.write(String.format("%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(), contact.getGroup(), contact.getPhoto()));
+                writer.write(String.format("%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(), contact.getPhoto()));
                 //contact.getAllPhones(), contact.getHomePhone(), contact.getMobilePhone()));
             }
         }
@@ -83,7 +83,9 @@ public class ContactDataGenerator {
         for (int i = 0; i < count; i++) {
             File photo = new File("src/test/resources/UnnPfCYmlns.jpg");
             contacts.add(new ContactData().withFirstname(String.format("firstname %s", i))
-                    .withLastname(String.format("lastname %s", i)).withGroup(String.format("group %s", i)).withPhoto(photo));
+                    .withLastname(String.format("lastname %s", i))
+                    //.withGroup(String.format("group %s", i))
+                    .withPhoto(photo));
                     //.withAllPhones(String.format("AllPhones %s", i)).withHomePhone(String.format("home %s", i)).withMobilePhone(String.format("mobile %s", i)));
         }
         return contacts;
